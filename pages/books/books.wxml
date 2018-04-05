@@ -1,0 +1,18 @@
+<view class="container">
+	<view class="search-container">搜索框</view>
+
+	<view class="scroll-container">
+		<scroll-view class="scroll-view-box" scroll-x>
+			
+			<view class="book-container" wx:for="{{bookList}}" wx:key="index">
+				
+				<view class="book">
+					<view class="book-images"></view>
+					<view class="book-info"></view>
+				</view>
+				
+			</view>
+
+		</scroll-view>
+	</view>
+</view>
