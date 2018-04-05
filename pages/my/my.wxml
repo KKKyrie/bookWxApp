@@ -21,6 +21,16 @@
 
 
 <view class="tab-container bg-white">
+
+    <view class="tab-item border-bottom" hover-class="tab-item-hover">
+        <view>
+            <image src="../../images/lucky_coin.png" mode="aspectFit" class="tab-icon"></image>
+            <text class="tab-text">高磊币</text>
+        </view>
+        
+        <text class="tab-text">10</text>
+    </view>
+
     <view class="tab-item" hover-class="tab-item-hover">
         <view>
             <image src="../../images/bought.png" mode="aspectFit" class="tab-icon"></image>

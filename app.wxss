@@ -22,3 +22,7 @@ page {
 	width: 30rpx;
 	height: 30rpx;
 }
+
+.border-bottom {
+	border-bottom: 1px solid #dbdbdb;
+}
