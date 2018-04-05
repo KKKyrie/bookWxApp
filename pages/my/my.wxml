@@ -22,9 +22,9 @@
 
 <view class="tab-container bg-white">
 
-    <view class="tab-item border-bottom" hover-class="tab-item-hover">
+    <view class="tab-item border-bottom">
         <view>
-            <image src="../../images/lucky_coin.png" mode="aspectFit" class="tab-icon"></image>
+            <image src="../../images/luckyCoin.png" mode="aspectFit" class="tab-icon"></image>
             <text class="tab-text">高磊币</text>
         </view>
         

@@ -1,0 +1,9 @@
+<!--pages/myBooks/myBooks.wxml-->
+<view class="book-container">
+	<view class="book" wx:for="{{bookList}}" wx:key="index">
+		<view class="book-image"></view>
+		<view class="book-name">
+			<text>{{ item.bookName }}</text>
+		</view>
+	</view>
+</view>

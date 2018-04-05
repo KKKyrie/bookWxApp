@@ -2,7 +2,9 @@
   "pages": [
     "pages/my/my",
     "pages/logs/logs",
-    "pages/books/books"
+    "pages/books/books",
+    "pages/myBooks/myBooks",
+    "pages/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -16,7 +18,7 @@
         "pagePath": "pages/books/books",
         "text": "书架",
         "iconPath": "images/book.png",
-        "selectedIconPath":"images/book.png"
+        "selectedIconPath": "images/book.png"
       },
       {
         "pagePath": "pages/my/my",

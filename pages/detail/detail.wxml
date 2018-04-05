@@ -1,0 +1,52 @@
+<!--pages/detail/detail.wxml-->
+<view>
+	
+	<view class="book-container bg-white">
+
+		<view class="book-info">
+			<image class="book-image" mode="scaleToFill" src="http://kyrieliu.cn/markdown-pics/pa.jpg"></image>
+
+			<view class="book-desc">
+				<text class="book-main-text">钢铁是怎样炼成的</text>
+				<text class="book-text">作者名字</text>
+				<text class="book-text">肛铁出版社</text>
+			</view>
+		</view>
+
+		<view class="button-area">
+			<button type="primary">兑换</button>
+		</view>
+
+	</view>
+
+	<view class="comment-container">
+		<view class="comment-title">
+			<text>------- 评论 -------</text>
+		</view>
+
+		<view class="comment-area">
+			
+			<view class="comment-item" wx:for="{{commentList}}" wx:key="index">
+				
+				<view class="avatar-container">
+					<image mode="scaleToFill" src="http://kyrieliu.cn/markdown-pics/pa.jpg" class="user-avatar"></image>
+				</view>
+
+				<view class="comment-content">
+					<text class="user-name">jeremygao</text>
+					<text class="user-comment">钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的</text>
+					<text class="comment-time">2018-04-05 23:23</text>
+				</view>
+			</view>
+
+		</view>
+	</view>
+
+
+	<!-- bottom button -->
+    <view class="fixed-bottom block-full-width flex-container bg-white">
+
+        <button class="light-blue-bg white full-button" type="primary"> 写评论 </button>
+
+    </view>
+</view>

@@ -26,3 +26,11 @@ page {
 .border-bottom {
 	border-bottom: 1px solid #dbdbdb;
 }
+
+/* 修正 text 组件 英文&符号不换行的问题  begin */
+text {
+	word-wrap: break-all;
+	word-break: break-word;
+	text-align: justify;
+}
+/* 修正 text 组件 英文&符号不换行的问题  end */
