@@ -5,7 +5,14 @@ Page({
      * 页面的初始数据
      */
     data: {
-        commentList: [{},{},{}]
+        commentList: [{}, {}, {}]
+    },
+
+
+    goComment: function() {
+        wx.navigateTo({
+            url: '../comment/comment'
+        });
     },
 
     /**

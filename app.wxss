@@ -34,3 +34,27 @@ text {
 	text-align: justify;
 }
 /* 修正 text 组件 英文&符号不换行的问题  end */
+
+
+.fixed-bottom{
+	position: fixed;
+	bottom: 0rpx;
+	left: 0rpx;
+	box-shadow: 0 -5rpx 20rpx #c9c9c9;
+}
+
+.block-full-width{
+	display: block;
+	width: 100%;
+	height: 150rpx;
+}
+
+.flex-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.full-button {
+	width: 80%;
+}

@@ -46,7 +46,7 @@
 	<!-- bottom button -->
     <view class="fixed-bottom block-full-width flex-container bg-white">
 
-        <button class="light-blue-bg white full-button" type="primary"> 写评论 </button>
+        <button class="full-button" type="primary" catchtap="goComment"> 写评论 </button>
 
     </view>
 </view>

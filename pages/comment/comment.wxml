@@ -1,0 +1,21 @@
+<!--pages/comment/comment.wxml-->
+<view class="comment-container">
+	
+	<!-- book name -->
+	<view class="book-name">
+		<text>钢铁是怎样炼成的</text>
+	</view>
+
+	<!-- comment area -->
+	<view class="comment-area bg-white">
+		<textarea placeholder="关于这本书的看法..." maxlength="140" value="{{comment}}" bindinput="inputComment"></textarea>
+	</view>
+
+	<!-- bottom button -->
+    <view class="fixed-bottom block-full-width flex-container bg-white">
+
+        <button class="full-button" type="primary" catchtap="submitComment"> 提交评论 </button>
+
+    </view>
+
+</view>
