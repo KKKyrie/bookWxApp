@@ -16,12 +16,14 @@
 	margin-bottom: 50rpx;
 	width: 208rpx;
 	height: 380rpx;
-	border: 1px solid #dbdbdb;
+	/*border: 1px solid #dbdbdb;*/
 	box-shadow: 0 0 15rpx #cdcdcd;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+
+	border-radius: 10rpx;
 }
 
 .book-hover {

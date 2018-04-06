@@ -28,7 +28,7 @@
 }
 
 .tab-item {
-	padding: 20rpx;
+	padding: 20rpx 30rpx;
 
 	display: flex;
 	flex-direction: row;

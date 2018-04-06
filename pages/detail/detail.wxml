@@ -4,12 +4,12 @@
 	<view class="book-container bg-white">
 
 		<view class="book-info">
-			<image class="book-image" mode="scaleToFill" src="http://kyrieliu.cn/markdown-pics/pa.jpg"></image>
+			<image class="book-image" mode="scaleToFill" src="{{bookInfo.image}}"></image>
 
 			<view class="book-desc">
-				<text class="book-main-text">钢铁是怎样炼成的</text>
-				<text class="book-text">作者名字</text>
-				<text class="book-text">肛铁出版社</text>
+				<text class="book-main-text">{{bookInfo.name}}</text>
+				<text class="book-text">{{bookInfo.author}}</text>
+				<text class="book-text">{{bookInfo.publisher}}</text>
 			</view>
 		</view>
 

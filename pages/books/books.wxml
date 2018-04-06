@@ -16,7 +16,7 @@
 
 	 			<swiper-item class="swiper-item">
 
-	 				<view class="book-container bg-white" hover-class="book-container-hover" catchtap="goDetail">
+	 				<view class="book-container bg-white" hover-class="book-container-hover" catchtap="goDetail" data-author="{{item.author}}" data-category="{{item.category}}" data-image="{{item.cover_url}}" data-id="{{item.book_id}}" data-name="{{item.book_name}}" data-price="{{item.book_price}}" data-publisher="{{item.book_publisher}}" data-file="{{item.file_url}}">
 	 					
 	 					<view class="book-image"> 
 	 						<image src="{{item.cover_url}}" mode="scaleToFill"></image>

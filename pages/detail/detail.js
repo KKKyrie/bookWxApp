@@ -5,7 +5,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        commentList: [{}, {}, {}]
+        commentList: [{}, {}, {}],
+        bookInfo: {}
     },
 
 
@@ -33,7 +34,7 @@ Page({
                         icon: 'success',
                         duration: 1500
                     });
-                    
+
                 } else if (res.cancel) {
                     // 取消
                 }
@@ -45,7 +46,15 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        let _bookInfo = {};
 
+        for (let key in options) {
+            _bookInfo[key] = decodeURIComponent(options[key]);
+        }
+
+        this.setData({
+            bookInfo: _bookInfo
+        });
     },
 
     /**

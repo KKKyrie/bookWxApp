@@ -22,9 +22,20 @@ Page({
     },
 
 
-    goDetail: function() {
+    goDetail: function(ev) {
+
+        let info = ev.currentTarget.dataset;
+        let navigateUrl = '../detail/detail?';
+
+        for (let key in info) {
+            info[key] = encodeURIComponent(info[key]);
+            navigateUrl += key + '=' + info[key] + '&';
+        }
+
+        navigateUrl = navigateUrl.substring(0, navigateUrl.length - 1);
+
         wx.navigateTo({
-            url: '../detail/detail'
+            url: navigateUrl
         });
     },
 

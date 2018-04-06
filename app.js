@@ -13,6 +13,7 @@ App({
         wx.login({
             success: res => {
                 // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                console.log(res);
             }
         });
 
@@ -38,29 +39,7 @@ App({
             }
         });
 
-        // that.getBookList();
 
-    },
-
-    getBookList: function() {
-        let that = this;
-        wx.request({
-            url: 'https://jeremygao.net/api/book/getBooks',
-            data: {
-                is_all: 1
-            },
-            success: function(res){
-                let data = res.data;
-                console.log(data);
-                
-                if (data.result === 0){
-                    that.globalData.bookList = data.data;
-                }
-            },
-            error: function(err){
-                console.log(err);
-            }            
-        });
     },
 
     globalData: {
