@@ -6,7 +6,7 @@
 
  			<swiper-item class="swiper-item">
 
- 				<view class="book-container bg-white" hover-class="book-container-hover">
+ 				<view class="book-container bg-white" hover-class="book-container-hover" catchtap="goDetail">
  					
  					<view class="book-image"> 
  						<image src="{{item.imgUrl}}" mode="scaleToFill"></image>

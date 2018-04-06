@@ -31,7 +31,7 @@
         <text class="tab-text">10</text>
     </view>
 
-    <view class="tab-item" hover-class="tab-item-hover">
+    <view class="tab-item" hover-class="tab-item-hover" catchtap="goMyBooks">
         <view>
             <image src="../../images/bought.png" mode="aspectFit" class="tab-icon"></image>
             <text class="tab-text">已购</text>

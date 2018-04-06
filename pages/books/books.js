@@ -39,6 +39,13 @@ Page({
         sideMargin: '100rpx'
     },
 
+
+    goDetail: function() {
+        wx.navigateTo({
+            url: '../detail/detail'
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
