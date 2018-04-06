@@ -3,7 +3,7 @@
 .swiper-container {
 	/*border: 1px solid red;*/
 	box-sizing: border-box;
-	padding: 180rpx 0 50rpx 0;
+	padding: 120rpx 0 50rpx 0;
 
 	display: flex;
 	justify-content: center;
@@ -12,7 +12,7 @@
 
 .swiper {
 	width: 750rpx;
-	height: 750rpx;
+	height: 800rpx;
 }
 
 .swiper-item {
@@ -26,7 +26,7 @@
 .book-container {
 	border: 1px solid #e6e6e6;
 	width: 480rpx;
-	height: 680rpx;
+	height: 700rpx;
 
 	padding: 30rpx 20rpx;
 
@@ -47,6 +47,7 @@
 .book-image {
 	/*border: 1px solid #cdcdcd;*/
 	/*box-shadow: 0 0 10rpx #dcdcdc;*/
+	margin-bottom: 10rpx;
 }
 
 .book-image > image {
@@ -60,6 +61,7 @@
 	align-items: center;
 
 	/*border: 1px solid black;*/
+	margin-top: 30rpx;
 }
 
 .book-name {
