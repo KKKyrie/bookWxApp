@@ -14,7 +14,7 @@
 		</view>
 
 		<view class="button-area">
-			<button type="primary">兑换</button>
+			<button type="primary" catchtap="exchangeBook">兑换</button>
 		</view>
 
 	</view>

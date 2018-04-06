@@ -15,6 +15,32 @@ Page({
         });
     },
 
+    exchangeBook: function() {
+        let that = this;
+        wx.showModal({
+            title: '提示',
+            content: '确定用1高磊币兑换此书吗？',
+            showCancel: true,
+            cancelText: '打扰了',
+            cancelColor: '#8a8a8a',
+            confirmText: '确定',
+            confirmColor: '#1AAD19',
+            success: function(res) {
+                if (res.confirm) {
+                    // 兑换
+                    wx.showToast({
+                        title: '兑换成功',
+                        icon: 'success',
+                        duration: 1500
+                    });
+                    
+                } else if (res.cancel) {
+                    // 取消
+                }
+            }
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
