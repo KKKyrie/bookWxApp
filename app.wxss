@@ -7,7 +7,7 @@
   justify-content: space-between;
   padding: 100rpx 0;
   box-sizing: border-box;
-  border: 1px solid green;
+  /*border: 1px solid green;*/
 }
 
 page {

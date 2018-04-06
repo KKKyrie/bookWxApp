@@ -1,31 +1,77 @@
 /* pages/books/books.wxss */
-.search-container {
-	border: 1px solid black;
+
+.swiper-container {
+	/*border: 1px solid red;*/
+	box-sizing: border-box;
+	padding: 180rpx 0 50rpx 0;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.scroll-container {
-	border: 1px solid red;
-	width: 100%;
+.swiper {
+	width: 750rpx;
+	height: 750rpx;
 }
 
-.scroll-view-box {
-	width: 100%;
-	/*display: flex;*/
-	white-space: nowrap;
+.swiper-item {
+	/*border: 1px solid blue;*/
+	/* 宽高自动设为100% */
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .book-container {
-	display: inline-block;
-	width: 80%;
-	height: 700rpx;
+	border: 1px solid #e6e6e6;
+	width: 480rpx;
+	height: 680rpx;
 
-	border: 1px solid blue;
+	padding: 30rpx 20rpx;
 
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+
+	border-radius: 20rpx;
+	box-shadow: 0 0 10rpx #dbdbdb;
 }
 
-.book {
-	/*background-color: green;*/
-	display: inline-block;
-	width: 100%;
-	height: 100%;
+.book-container-hover {
+	transform: scale(0.96,0.96);
+  	transition: all 1 ease 0;
+}
+
+.book-image {
+	box-shadow: 0 0 10rpx #dcdcdc;
+}
+
+.book-image > image {
+	width: 350rpx;
+}
+
+.book-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+
+	/*border: 1px solid black;*/
+}
+
+.book-name {
+	color: #1e1e1e;
+	font-size: 35rpx;
+}
+
+.author {
+	color: #8a8a8a;
+	font-size: 30rpx;
+}
+
+.publisher {
+	color: #cdcdcd;
+	font-size: 30rpx;
 }

@@ -1,18 +1,32 @@
-<view class="container">
-	<view class="search-container">搜索框</view>
+<view class="swiper-container">
 
-	<view class="scroll-container">
-		<scroll-view class="scroll-view-box" scroll-x>
-			
-			<view class="book-container" wx:for="{{bookList}}" wx:key="index">
-				
-				<view class="book">
-					<view class="book-images"></view>
-					<view class="book-info"></view>
-				</view>
-				
-			</view>
+	<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" class="swiper" previous-margin="{{sideMargin}}" next-margin="{{sideMargin}}">
 
-		</scroll-view>
-	</view>
+ 		<block wx:for="{{bookList}}" wx:key="index">
+
+ 			<swiper-item class="swiper-item">
+
+ 				<view class="book-container bg-white" hover-class="book-container-hover">
+ 					
+ 					<view class="book-image"> 
+ 						<image src="{{item.imgUrl}}" mode="scaleToFill"></image>
+ 					</view>
+
+ 					<view class="book-info">
+ 						<text class="book-name">{{item.bookName}}</text>
+ 						<text class="author">{{item.author}}</text>
+ 						<text class="publisher">{{item.publisher}}</text>
+ 					</view>
+					
+
+ 				</view>
+
+ 			</swiper-item>
+
+		</block>
+
+	</swiper>
+
 </view>
+
+
