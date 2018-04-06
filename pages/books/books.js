@@ -1,42 +1,24 @@
 // pages/books/books.js
+
+const app = getApp();
+
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        bookList: [{
-            index: 1,
-            bookName: 'test',
-            author: 'jeremygao',
-            publisher: 'Tencent',
-            class: 'tech',
-            bookId: '666',
-            imgUrl: 'http://kyrieliu.cn/markdown-pics/pa.jpg'
-        }, {
-            index: 2,
-            bookName: 'test',
-            author: 'jeremy',
-            publisher: 'now',
-            class: 'tech',
-            bookId: '666',
-            imgUrl: 'http://kyrieliu.cn/markdown-pics/pa.jpg'
-        }, {
-            index: 3,
-            bookName: 'test',
-            author: 'jeremy',
-            publisher: 'now',
-            class: 'tech',
-            bookId: '666',
-            imgUrl: 'http://kyrieliu.cn/markdown-pics/pa.jpg'
-        }],
+        bookList: [],
         indicatorDots: false,
         autoplay: false,
         interval: 5000,
         duration: 1000,
         circular: true,
 
-        sideMargin: '100rpx'
+        sideMargin: '100rpx',
+
+        showLoading: true
     },
 
 
@@ -46,11 +28,42 @@ Page({
         });
     },
 
+    getBookList: function() {
+        let that = this;
+        wx.request({
+            url: 'https://jeremygao.net/api/book/getBooks',
+            data: {
+                is_all: 1
+            },
+            success: function(res) {
+                let data = res.data;
+                console.log(data);
+
+                if (data.result === 0) {
+                    app.globalData.bookList = data.data;
+
+
+                    setTimeout(function() {
+                        that.setData({
+                            bookList: data.data,
+                            showLoading: false
+                        });
+                    }, 800);
+                }
+
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+        let that = this;
+        that.getBookList();
     },
 
     /**
@@ -101,4 +114,4 @@ Page({
     onShareAppMessage: function() {
 
     }
-})
+});

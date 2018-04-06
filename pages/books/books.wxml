@@ -1,32 +1,42 @@
 <view class="swiper-container">
 
-	<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" class="swiper" previous-margin="{{sideMargin}}" next-margin="{{sideMargin}}">
+	<!-- loading -->
+	<block wx:if="{{showLoading}}">
+		<view class="donut-container">
+			<view class="donut"></view>
+		</view>
+	</block>
 
- 		<block wx:for="{{bookList}}" wx:key="index">
 
- 			<swiper-item class="swiper-item">
+	<!-- book swiper -->
+	<block wx:else>
+		<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" class="swiper" previous-margin="{{sideMargin}}" next-margin="{{sideMargin}}">
 
- 				<view class="book-container bg-white" hover-class="book-container-hover" catchtap="goDetail">
- 					
- 					<view class="book-image"> 
- 						<image src="{{item.imgUrl}}" mode="scaleToFill"></image>
- 					</view>
+	 		<block wx:for="{{bookList}}" wx:key="index">
 
- 					<view class="book-info">
- 						<text class="book-name">{{item.bookName}}</text>
- 						<text class="author">{{item.author}}</text>
- 						<text class="publisher">{{item.publisher}}</text>
- 					</view>
-					
+	 			<swiper-item class="swiper-item">
 
- 				</view>
+	 				<view class="book-container bg-white" hover-class="book-container-hover" catchtap="goDetail">
+	 					
+	 					<view class="book-image"> 
+	 						<image src="{{item.cover_url}}" mode="scaleToFill"></image>
+	 					</view>
 
- 			</swiper-item>
+	 					<view class="book-info">
+	 						<text class="book-name">{{item.book_name}}</text>
+	 						<text class="author">{{item.author}}</text>
+	 						<text class="publisher">{{item.book_publisher}}</text>
+	 					</view>
+						
 
-		</block>
+	 				</view>
 
-	</swiper>
+	 			</swiper-item>
 
+			</block>
+
+		</swiper>
+	</block>
 </view>
 
 

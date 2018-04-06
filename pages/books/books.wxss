@@ -45,7 +45,8 @@
 }
 
 .book-image {
-	box-shadow: 0 0 10rpx #dcdcdc;
+	/*border: 1px solid #cdcdcd;*/
+	/*box-shadow: 0 0 10rpx #dcdcdc;*/
 }
 
 .book-image > image {
@@ -74,4 +75,8 @@
 .publisher {
 	color: #cdcdcd;
 	font-size: 30rpx;
+}
+
+.donut-container {
+	padding-top: 200rpx;
 }
