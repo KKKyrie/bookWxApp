@@ -5,7 +5,6 @@ const app = getApp()
 Page({
     data: {
         userInfo: {},
-        hasUserInfo: false,
         hasLogin: wx.getStorageSync('loginFlag') ? true : false
     },
 

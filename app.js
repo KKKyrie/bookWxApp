@@ -12,39 +12,6 @@ App({
         // 展示本地存储能力 end
 
 
-
-        // 登录
-        wx.login({
-            success: res => {
-                // 发送 res.code 到后台换取 openId, sessionKey, unionId
-                console.log(res);
-            }
-        });
-
-
-        // 获取用户信息
-        wx.getSetting({
-            success: res => {
-                console.log(res);
-                if (res.authSetting['scope.userInfo']) {
-                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-                    wx.getUserInfo({
-                        success: res => {
-                            // 可以将 res 发送给后台解码出 unionId
-                            this.globalData.userInfo = res.userInfo;
-
-                            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-                            // 所以此处加入 callback 以防止这种情况
-                            if (this.userInfoReadyCallback) {
-                                this.userInfoReadyCallback(res);
-                            }
-                        }
-                    })
-                }
-            }
-        });
-
-
         that.checkLoginStatus();
 
 
@@ -116,7 +83,7 @@ App({
                         success: function(infoRes) {
                             // 请求服务端的登录接口
                             wx.request({
-                                url: '',
+                                url: 'https://jeremygao.net/login',
                                 data: {
                                     code: loginRes.code,
                                     rawData: infoRes.rawData,
@@ -129,9 +96,19 @@ App({
                                     console.log('login success');
                                     // 在 res 中拿到用户的信息 存到 globalData 中
                                     // 将 loginFlag 存入 storage 中
-                                    that.globalData.userInfo = res.userInfo;
-                                    wx.setStorageSync('loginFlag', res.skey)
-                                    callback();
+                                    res = res.data;
+                                    
+                                    if (res.result == 0) {
+                                        that.globalData.userInfo = res.userInfo;
+                                        wx.setStorageSync('loginFlag', res.skey)
+                                        callback();
+                                    } else {
+                                        wx.showToast({
+                                            title: res.errmsg,
+                                            icon: 'none',
+                                            duration: 1500
+                                        });
+                                    }
                                 },
 
                                 fail: function(error) {
@@ -176,7 +153,7 @@ App({
                     icon: 'none',
                     duration: 1500
                 });
-                consoel.log(error);
+                console.log(error);
             }
         });
     },
