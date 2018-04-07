@@ -6,8 +6,7 @@ Page({
     data: {
         userInfo: {},
         hasUserInfo: false,
-        hasLogin: false,
-        test: '点击登陆'
+        hasLogin: false
     },
 
 

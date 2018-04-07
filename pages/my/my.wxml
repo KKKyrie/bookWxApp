@@ -6,7 +6,7 @@
 
         <block wx:if="{{!hasLogin}}">
             <image class="userinfo-avatar" src="../../images/login.png" background-size="cover" catchtap="doLogin"></image>
-            <text class="userinfo-nickname">{{test}}</text>
+            <text class="userinfo-nickname">点击登录</text>
         </block>
         
         <block wx:else>

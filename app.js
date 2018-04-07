@@ -113,6 +113,7 @@ App({
 
                                 success: function(res) {
                                     // 在 res 中拿到用户的信息 存到 globalData 中
+                                    // 将 loginFlag 存入 storage 中
                                     callback();
                                 },
 
