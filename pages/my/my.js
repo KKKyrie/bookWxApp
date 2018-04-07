@@ -6,7 +6,7 @@ Page({
     data: {
         userInfo: {},
         hasUserInfo: false,
-        hasLogin: false
+        hasLogin: app.globalData.loginFlag ? true : false
     },
 
 
