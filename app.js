@@ -1,13 +1,17 @@
 //app.js
 App({
+
     onLaunch: function() {
-        
+
         let that = this;
 
-        // 展示本地存储能力
+        // 展示本地存储能力 begin
         let logs = wx.getStorageSync('logs') || [];
         logs.unshift(Date.now());
         wx.setStorageSync('logs', logs);
+        // 展示本地存储能力 end
+
+
 
         // 登录
         wx.login({
@@ -21,6 +25,7 @@ App({
         // 获取用户信息
         wx.getSetting({
             success: res => {
+                console.log(res);
                 if (res.authSetting['scope.userInfo']) {
                     // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
                     wx.getUserInfo({
@@ -40,7 +45,124 @@ App({
         });
 
 
+        that.checkLoginStatus();
+
+
     },
+
+
+
+    // 检查本地 storage 中是否有登录态标识
+    checkLoginStatus: function() {
+        let that = this;
+        let loginFlag = wx.getStorageSync('loginFlag');
+        if (loginFlag) {
+            // 检查 session_key 是否过期
+            wx.checkSession({
+
+                // session_key 有效(为过期)
+                success: function() {
+                    console.log('session_key有效, 登录态有效');
+                },
+
+                // session_key 过期
+                fail: function() {
+                    // doLogin()
+                    console.log('session_key过期');
+                }
+            });
+
+
+        } else {
+            // doLogin()
+            console.log('无登录态');
+        }
+    },
+
+
+    // 登录动作
+    doLogin: function(callback = () => {}) {
+        wx.login({
+            success: function(loginRes) {
+                if (loginRes.code) {
+
+                    /* 
+                     * 获取用户信息 期望数据如下 
+                     *
+                     * userInfo       [object]
+                     * rawData        [string]
+                     * signature      [string]
+                     * encryptedData  [string]
+                     * iv             [string]
+                     *
+                     */
+                    wx.getUserInfo({
+                        withCredentials: true, // 非必填, 默认为true
+
+                        success: function(infoRes) {
+                            // 请求服务端的登录接口
+                            wx.request({
+                                url: '',
+                                data: {
+                                    code: loginRes.code,
+                                    rawData: infoRes.rawData,
+                                    signature: infoRes.signature,
+                                    encryptedData: infoRes.encryptedData,
+                                    iv: infoRes.iv
+                                },
+
+                                success: function(res) {
+                                    // 在 res 中拿到用户的信息 存到 globalData 中
+                                    callback();
+                                },
+
+                                fail: function(error) {
+                                    // 调用服务端登录接口失败
+                                    wx.showToast({
+                                        title: '调用接口失败',
+                                        icon: 'none',
+                                        duration: 1500
+                                    });
+                                    console.log(error);
+                                }
+                            });
+                        },
+
+                        fail: function(error) {
+                            // 获取 userInfo 失败
+                            wx.showToast({
+                                title: '获取信息失败',
+                                icon: 'none',
+                                duration: 1500
+                            });
+                            console.log('获取用户信息失败，错误信息如下');
+                            console.log(error);
+                        }
+                    });
+
+                } else {
+                    // 获取 code 失败
+                    wx.showToast({
+                        title: '登录失败',
+                        icon: 'none',
+                        duration: 1500
+                    });
+                    console.log('调用wx.login获取code失败');
+                }
+            },
+
+            fail: function(error) {
+                // 调用 wx.login 接口失败
+                wx.showToast({
+                    title: '接口调用失败',
+                    icon: 'none',
+                    duration: 1500
+                });
+                consoel.log(error);
+            }
+        });
+    },
+
 
     globalData: {
         userInfo: null,

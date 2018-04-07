@@ -4,11 +4,50 @@ const app = getApp()
 
 Page({
     data: {
-        motto: 'Hello World',
         userInfo: {},
         hasUserInfo: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo')
+        hasLogin: false,
+        test: '点击登陆'
     },
+
+
+    // 检查本地 storage 中是否有登录态标识
+    checkLoginStatus: function() {
+        let that = this;
+        let loginFlag = wx.getStorageSync('loginFlag');
+        if (loginFlag) {
+            // 检查 session_key 是否过期
+            wx.checkSession({
+
+                // session_key 有效(为过期)
+                success: function() {
+                    // 获取用户头像/昵称等信息
+                    that,
+                    getUserInfo();
+                },
+
+                // session_key 过期
+                fail: function() {
+                    that.setData({
+                        hasLogin: false
+                    });
+                }
+            });
+
+
+        } else {
+            that.setData({
+                hasLogin: false
+            });
+        }
+    },
+
+
+    doLogin: function() {
+        let that = this;
+        app.doLogin(that.getUserInfo);
+    },
+
 
     goMyBooks: function() {
         wx.navigateTo({
@@ -16,47 +55,22 @@ Page({
         });
     },
 
-    //事件处理函数
-    bindViewTap: function() {
-        wx.navigateTo({
-            url: '../logs/logs'
-        })
-    },
-    onLoad: function() {
-        if (app.globalData.userInfo) {
-            this.setData({
-                userInfo: app.globalData.userInfo,
-                hasUserInfo: true
-            })
-        } else if (this.data.canIUse) {
-            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-            // 所以此处加入 callback 以防止这种情况
-            app.userInfoReadyCallback = res => {
-                this.setData({
-                    userInfo: res.userInfo,
-                    hasUserInfo: true
-                })
-            }
-        } else {
-            // 在没有 open-type=getUserInfo 版本的兼容处理
-            wx.getUserInfo({
-                success: res => {
-                    app.globalData.userInfo = res.userInfo
-                    this.setData({
-                        userInfo: res.userInfo,
-                        hasUserInfo: true
-                    })
-                }
-            })
-        }
+    getUserInfo: function() {
+        // 从 globalData 中获取 userInfo
+        let that = this;
 
+        let userInfo = app.globalData.userInfo;
+
+        if (userInfo) {
+            that.setData({
+                userInfo: userInfo
+            });
+        } else {
+            console.log('globalData中userInfo为空');
+        }
     },
-    getUserInfo: function(e) {
-        console.log(e)
-        app.globalData.userInfo = e.detail.userInfo
-        this.setData({
-            userInfo: e.detail.userInfo,
-            hasUserInfo: true
-        })
+
+    onLoad: function() {
+
     }
 })

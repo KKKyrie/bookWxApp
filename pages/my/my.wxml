@@ -4,13 +4,13 @@
     <view class="userinfo">
         
 
-        <block wx:if="{{!hasUserInfo && canIUse}}">
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="http://kyrieliu.cn/markdown-pics/pa.jpg" background-size="cover"></image>
-            <text class="userinfo-nickname">无名氏</text>
+        <block wx:if="{{!hasLogin}}">
+            <image class="userinfo-avatar" src="../../images/login.png" background-size="cover" catchtap="doLogin"></image>
+            <text class="userinfo-nickname">{{test}}</text>
         </block>
         
         <block wx:else>
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
             <text class="userinfo-nickname">{{userInfo.nickName}}</text>
         </block>
 
@@ -28,7 +28,8 @@
             <text class="tab-text">高磊币</text>
         </view>
         
-        <text class="tab-text">10</text>
+        <text class="tab-text" wx:if="{{hasLogin}}">10</text>
+        <text class="tab-text" wx:else></text>
     </view>
 
     <view class="tab-item" hover-class="tab-item-hover" catchtap="goMyBooks">
