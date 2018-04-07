@@ -43,6 +43,10 @@ Page({
 
     doLogin: function() {
         let that = this;
+        wx.showLoading({
+            title: '登录中...',
+            mask: true
+        });
         app.doLogin(that.getUserInfo);
     },
 
@@ -64,6 +68,7 @@ Page({
                 hasLogin: true,
                 userInfo: userInfo
             });
+            wx.hideLoading();
         } else {
             console.log('globalData中userInfo为空');
         }
