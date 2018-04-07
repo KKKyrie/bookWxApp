@@ -21,8 +21,7 @@ Page({
                 // session_key 有效(为过期)
                 success: function() {
                     // 获取用户头像/昵称等信息
-                    that,
-                    getUserInfo();
+                    that.getUserInfo();
                 },
 
                 // session_key 过期
