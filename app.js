@@ -35,12 +35,8 @@ App({
                             that.globalData.userInfo = res.userInfo;
                         },
                         fail: function(error) {
-                            wx.showToast({
-                                title: '获取信息失败',
-                                icon: 'none',
-                                duration: 1500
-                            });
-                            console.log(error);
+                            // 获取用户信息失败，去检查是否未开启权限
+                            that.checkUserInfoPermission();
                         }
                     });
                 },
@@ -65,6 +61,7 @@ App({
         let that = this;
         wx.login({
             success: function(loginRes) {
+
                 if (loginRes.code) {
 
                     /* 
@@ -76,8 +73,9 @@ App({
                      * encryptedData  [string]
                      * iv             [string]
                      *
-                     */
+                     **/
                     wx.getUserInfo({
+
                         withCredentials: true, // 非必填, 默认为true
 
                         success: function(infoRes) {
@@ -97,7 +95,7 @@ App({
                                     // 在 res 中拿到用户的信息 存到 globalData 中
                                     // 将 loginFlag 存入 storage 中
                                     res = res.data;
-                                    
+
                                     if (res.result == 0) {
                                         that.globalData.userInfo = res.userInfo;
                                         wx.setStorageSync('loginFlag', res.skey)
@@ -124,14 +122,9 @@ App({
                         },
 
                         fail: function(error) {
-                            // 获取 userInfo 失败
-                            wx.showToast({
-                                title: '获取信息失败',
-                                icon: 'none',
-                                duration: 1500
-                            });
-                            console.log('获取用户信息失败，错误信息如下');
-                            console.log(error);
+                            // 获取 userInfo 失败，去检查是否未开启权限
+                            wx.hideLoading();
+                            that.checkUserInfoPermission();
                         }
                     });
 
@@ -153,6 +146,25 @@ App({
                     icon: 'none',
                     duration: 1500
                 });
+                console.log(error);
+            }
+        });
+    },
+
+
+    checkUserInfoPermission: function(callback = () => {}) {
+        wx.getSetting({
+            success: function(res) {
+                if (!res.authSetting['scope.userInfo']) {
+                    wx.openSetting({
+                        success: function(authSetting) {
+                            console.log(authSetting)
+                        }
+                    });
+                }
+            },
+
+            fail: function(error) {
                 console.log(error);
             }
         });
