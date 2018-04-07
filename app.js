@@ -62,26 +62,40 @@ App({
 
                 // session_key 有效(为过期)
                 success: function() {
-                    console.log('session_key有效, 登录态有效');
+                    // 直接获取用户信息
+                    wx.getUserInfo({
+                        success: function(res) {
+                            that.globalData.userInfo = res.userInfo;
+                        },
+                        fail: function(error) {
+                            wx.showToast({
+                                title: '获取信息失败',
+                                icon: 'none',
+                                duration: 1500
+                            });
+                            console.log(error);
+                        }
+                    });
                 },
 
                 // session_key 过期
                 fail: function() {
-                    // doLogin()
-                    console.log('session_key过期');
+                    // session_key过期
+                    that.doLogin();
                 }
             });
 
 
         } else {
-            // doLogin()
-            console.log('无登录态');
+            // 无登录态
+            that.doLogin();
         }
     },
 
 
     // 登录动作
     doLogin: function(callback = () => {}) {
+        let that = this;
         wx.login({
             success: function(loginRes) {
                 if (loginRes.code) {
@@ -112,8 +126,11 @@ App({
                                 },
 
                                 success: function(res) {
+                                    console.log('login success');
                                     // 在 res 中拿到用户的信息 存到 globalData 中
                                     // 将 loginFlag 存入 storage 中
+                                    that.globalData.userInfo = res.userInfo;
+                                    wx.setStorageSync('loginFlag', res.skey)
                                     callback();
                                 },
 

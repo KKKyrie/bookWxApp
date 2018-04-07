@@ -6,7 +6,7 @@ Page({
     data: {
         userInfo: {},
         hasUserInfo: false,
-        hasLogin: app.globalData.loginFlag ? true : false
+        hasLogin: wx.getStorageSync('loginFlag') ? true : false
     },
 
 
