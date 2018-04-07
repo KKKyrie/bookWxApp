@@ -1,5 +1,13 @@
 <!--pages/myBooks/myBooks.wxml-->
-<view class="book-container">
+
+<view class="loading-container" wx:if="{{showLoading}}">
+	<view class="donut-container">
+		<view class="donut"></view>
+	</view>
+</view>
+
+
+<view class="book-container" wx:else>
 	<view class="book bg-white" hover-class="book-hover" wx:for="{{bookList}}" wx:key="index">
 		<view class="book-image">
 			<image src="{{item.imgUrl}}" mode="scaleToFill"></image>

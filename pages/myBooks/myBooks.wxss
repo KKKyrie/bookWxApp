@@ -1,4 +1,12 @@
 /* pages/myBooks/myBooks.wxss */
+
+.loading-container {
+	display: flex;
+	padding-top: 400rpx;
+	justify-content: center;
+	align-items: center;
+}
+
 .book-container {
 	display: flex;
 	box-sizing: border-box;
