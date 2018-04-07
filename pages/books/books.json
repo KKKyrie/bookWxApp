@@ -1,3 +1,4 @@
 {
-	"navigationBarTitleText": "小书架"
+	"navigationBarTitleText": "小书架",
+	"disableScroll": true
 }
