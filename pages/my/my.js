@@ -64,6 +64,7 @@ Page({
 
         if (userInfo) {
             that.setData({
+                hasLogin: true,
                 userInfo: userInfo
             });
         } else {
