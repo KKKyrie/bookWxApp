@@ -22,6 +22,9 @@ Page({
                 success: function() {
                     // 获取用户头像/昵称等信息
                     that.getUserInfo();
+                    that.setData({
+                        hasLogin: true
+                    });
                 },
 
                 // session_key 过期
