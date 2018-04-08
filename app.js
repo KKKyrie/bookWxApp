@@ -29,16 +29,21 @@ App({
 
                 // session_key 有效(为过期)
                 success: function() {
-                    // 直接获取用户信息
-                    wx.getUserInfo({
-                        success: function(res) {
-                            that.globalData.userInfo = res.userInfo;
-                        },
-                        fail: function(error) {
-                            // 获取用户信息失败，去检查是否未开启权限
-                            that.checkUserInfoPermission();
-                        }
-                    });
+                    
+                    // 直接从Storage中获取用户信息
+                    let userStorageInfo = wx.getStorageSync('userInfo');
+                    if (userStorageInfo) {
+                        that.globalData.userInfo = JSON.parse(userStorageInfo);
+                    } else {
+                        wx.showToast({
+                            title: '缓存信息缺失',
+                            icon: 'none',
+                            duration: 1500
+                        });
+
+                        console.error('登录成功后将用户信息存在Storage的userStorageInfo字段中，该字段丢失');
+                    }
+
                 },
 
                 // session_key 过期
@@ -82,6 +87,7 @@ App({
                             // 请求服务端的登录接口
                             wx.request({
                                 url: 'https://jeremygao.net/login',
+
                                 data: {
                                     code: loginRes.code,
                                     rawData: infoRes.rawData,
@@ -92,14 +98,15 @@ App({
 
                                 success: function(res) {
                                     console.log('login success');
-                                    // 在 res 中拿到用户的信息 存到 globalData 中
-                                    // 将 loginFlag 存入 storage 中
                                     res = res.data;
 
                                     if (res.result == 0) {
+
                                         that.globalData.userInfo = res.userInfo;
-                                        wx.setStorageSync('loginFlag', res.skey)
+                                        wx.setStorageSync('userInfo', JSON.stringify(res.userInfo));
+                                        wx.setStorageSync('loginFlag', res.skey);
                                         callback();
+
                                     } else {
                                         wx.showToast({
                                             title: res.errmsg,

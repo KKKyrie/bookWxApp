@@ -61,6 +61,7 @@ Page({
         let that = this;
 
         let userInfo = app.globalData.userInfo;
+        console.info(userInfo);
 
         if (userInfo) {
             that.setData({

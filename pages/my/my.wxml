@@ -28,7 +28,7 @@
             <text class="tab-text">高磊币</text>
         </view>
         
-        <text class="tab-text" wx:if="{{hasLogin}}">10</text>
+        <text class="tab-text" wx:if="{{hasLogin}}">{{userInfo.price}}</text>
         <text class="tab-text" wx:else></text>
     </view>
 
