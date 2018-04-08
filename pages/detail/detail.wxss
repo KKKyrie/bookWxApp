@@ -134,3 +134,9 @@
 	color: #cdcdcd;
 	font-size: 20rpx;
 }
+
+.comment-loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -24,7 +24,12 @@
 			<text>------- 评论 -------</text>
 		</view>
 
-		<view class="comment-area">
+
+		<view class="comment-loading" wx:if="{{commentLoading}}">
+			<view class="donut"></view>
+		</view>
+
+		<view class="comment-area" wx:else>
 			
 			<view class="comment-item" wx:for="{{commentList}}" wx:key="index">
 				

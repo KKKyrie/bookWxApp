@@ -6,7 +6,8 @@ Page({
      */
     data: {
         commentList: [{}, {}, {}],
-        bookInfo: {}
+        bookInfo: {},
+        commentLoading: true
     },
 
 
@@ -58,14 +59,22 @@ Page({
      */
     onLoad: function(options) {
         let _bookInfo = {};
+        let that = this;
 
         for (let key in options) {
             _bookInfo[key] = decodeURIComponent(options[key]);
         }
 
-        this.setData({
+        that.setData({
             bookInfo: _bookInfo
         });
+
+
+        setTimeout(function(){
+            that.setData({
+                commentLoading: false
+            });
+        }, 1000);
     },
 
     /**
