@@ -3,7 +3,7 @@
 	
 	<!-- book name -->
 	<view class="book-name">
-		<text>钢铁是怎样炼成的</text>
+		<text>{{bookInfo.name}}</text>
 	</view>
 
 	<!-- comment area -->

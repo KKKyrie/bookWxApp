@@ -1,11 +1,16 @@
 // pages/comment/comment.js
+
+const app = getApp();
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        comment: ''
+        bookInfo: {},
+        comment: '',
+        loginFlag: app.getLoginFlag()
     },
 
     // 用户输入备注
@@ -16,7 +21,6 @@ Page({
         });
     },
 
-    // 检查用户输入是否为空
     checkEmpty: function(input) {
         return input === '';
     },
@@ -52,12 +56,7 @@ Page({
         }
 
         if (showToastFlag) {
-            wx.showToast({
-                title: toastWording,
-                icon: 'none',
-                duration: 1500,
-                mask: true
-            });
+            that.showInfo(toastWording);
             return false;
         } else {
             return true;
@@ -66,17 +65,58 @@ Page({
 
     submitComment: function() {
         let that = this;
-        if (that.checkUserInput()){
+        if (that.checkUserInput()) {
             console.log('submit!');
+
+            let requestData = {
+                skey: that.data.loginFlag,
+                comment: that.data.comment,
+                commentTime: Date.now(),
+                bookId: that.data.bookInfo.id
+            };
+
+            wx.request({
+                url: '',
+                method: 'POST',
+                data: requestData,
+                success: function(res){
+                    console.log(res);
+                },
+                fail: function(error){
+                    that.showInfo('请求失败');
+                }
+            });
         }
+    },
+
+
+    // 封装 wx.showToast
+    showInfo: function(info){
+        wx.showToast({
+            title: info,
+            icon: 'none',
+            duration: 1500,
+            mask: true
+        });
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        let _bookInfo = {};
 
+        for (let key in options) {
+            _bookInfo[key] = decodeURIComponent(options[key]);
+        }
+
+        console.log(_bookInfo);
+
+        this.setData({
+            bookInfo: _bookInfo
+        });
     },
+
 
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -90,40 +130,5 @@ Page({
      */
     onShow: function() {
 
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {
-
     }
-})
+});
