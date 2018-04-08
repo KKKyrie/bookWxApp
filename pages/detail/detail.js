@@ -1,4 +1,7 @@
 // pages/detail/detail.js
+
+const app = getApp();
+
 Page({
 
     /**
@@ -7,7 +10,8 @@ Page({
     data: {
         commentList: [{}, {}, {}],
         bookInfo: {},
-        commentLoading: true
+        commentLoading: true,
+        loginFlag: app.getLoginFlag()
     },
 
 
@@ -54,6 +58,29 @@ Page({
         });
     },
 
+    // 获取书籍评论列表及是否购买
+    getPageData: function(){
+
+        let that = this;
+        let requestData = {
+            bookid: that.data.bookInfo.id,
+            skey: that.data.loginFlag
+        };
+
+        wx.request({
+            url: 'https://jeremygao.net/api/book/queryBook',
+            method: 'GET',
+            data: requestData,
+            success: function(res){
+                console.log(res);
+            },
+            fail: function(error){
+                that.showInfo('请求失败');
+            }
+        });
+    },
+
+
     showInfo: function(info){
         wx.showToast({
             title: info,
@@ -84,6 +111,8 @@ Page({
                 commentLoading: false
             });
         }, 1000);
+
+        that.getPageData()
     },
 
     /**
