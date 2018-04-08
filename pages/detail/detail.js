@@ -54,6 +54,15 @@ Page({
         });
     },
 
+    showInfo: function(info){
+        wx.showToast({
+            title: info,
+            icon: 'none',
+            duration: 1500,
+            mask: true
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
