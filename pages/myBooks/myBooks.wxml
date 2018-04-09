@@ -7,9 +7,9 @@
 </view>
 
 
-<view class="book-container" wx:else>
+<view class="book-container" catchtap="readBook" wx:else>
 	<view class="book bg-white" hover-class="book-hover" wx:for="{{bookList}}" wx:key="index">
-		<view class="book-image">
+		<view class="book-image" data-test="{{item.imgUrl}}">
 			<image src="{{item.imgUrl}}" mode="scaleToFill"></image>
 		</view>
 		<view class="book-name">

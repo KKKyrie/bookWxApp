@@ -95,11 +95,17 @@ Page({
             data: requestData,
             success: function(res) {
                 if (res.data.result === 0) {
+                    console.log(res.data);
                     that.setData({
-                        commentList: res.data.data.lists,
-                        commentLoading: false,
+                        commentList: res.data.data.lists || [],
                         bookIsBuy: res.data.data.is_buy
                     });
+
+                    setTimeout(function() {
+                        that.setData({
+                            commentLoading: false
+                        });
+                    }, 500);
                 } else {
                     that.showInfo('返回数据异常');
                 }
@@ -139,10 +145,12 @@ Page({
     },
 
     // 从上级页面返回时 重新拉去评论列表
-    backRefreshPage: function(){
-        
+    backRefreshPage: function() {
+
         let that = this;
-        that.setData({ commentLoading: true });
+        that.setData({
+            commentLoading: true
+        });
 
         that.getPageData();
 
@@ -152,10 +160,10 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        if (wx.getStorageSync('isFromBack')){
+        if (wx.getStorageSync('isFromBack')) {
             wx.removeStorageSync('isFromBack')
             this.backRefreshPage();
         }
-        
+
     }
 });

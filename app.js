@@ -165,7 +165,7 @@ App({
 
 
     // 封装 wx.showToast 方法
-    showInfo: function(info){
+    showInfo: function(info = 'error'){
         wx.showToast({
             title: info,
             icon: 'none',
