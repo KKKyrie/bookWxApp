@@ -8,7 +8,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        commentList: [{}, {}, {}],
+        commentList: [],
         bookInfo: {},
         commentLoading: true,
         loginFlag: app.getLoginFlag()
@@ -72,7 +72,14 @@ Page({
             method: 'GET',
             data: requestData,
             success: function(res){
-                console.log(res);
+                if (res.data.result === 0){
+                    that.setData({
+                        commentList: res.data.data.lists,
+                        commentLoading: false
+                    });
+                } else {
+                    that.showInfo('返回数据异常');
+                }
             },
             fail: function(error){
                 that.showInfo('请求失败');
@@ -104,13 +111,6 @@ Page({
         that.setData({
             bookInfo: _bookInfo
         });
-
-
-        setTimeout(function(){
-            that.setData({
-                commentLoading: false
-            });
-        }, 1000);
 
         that.getPageData()
     },

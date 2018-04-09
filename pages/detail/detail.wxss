@@ -84,10 +84,18 @@
 .comment-item {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: flex-start;
 
 	margin-bottom: 20rpx;
+}
+
+.comment-placeholder {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: #dcdcdc;
 }
 
 .comment-item:last-child {

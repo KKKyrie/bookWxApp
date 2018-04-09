@@ -21,7 +21,7 @@
 
 	<view class="comment-container">
 		<view class="comment-title">
-			<text>------- 评论 -------</text>
+			<text>--------- 评论 ---------</text>
 		</view>
 
 
@@ -31,18 +31,24 @@
 
 		<view class="comment-area" wx:else>
 			
-			<view class="comment-item" wx:for="{{commentList}}" wx:key="index">
-				
-				<view class="avatar-container">
-					<image mode="scaleToFill" src="http://kyrieliu.cn/markdown-pics/pa.jpg" class="user-avatar"></image>
-				</view>
+			<block wx:if="{{commentList.length > 0}}">
+				<view class="comment-item" wx:for="{{commentList}}" wx:key="index">
+					<view class="avatar-container">
+						<image mode="scaleToFill" src="{{item.uavatar}}" class="user-avatar"></image>
+					</view>
 
-				<view class="comment-content">
-					<text class="user-name">jeremygao</text>
-					<text class="user-comment">钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的</text>
-					<text class="comment-time">2018-04-05 23:23</text>
+					<view class="comment-content">
+						<text class="user-name">{{item.uname}}</text>
+						<text class="user-comment">{{item.ccontent}}</text>
+						<text class="comment-time">{{item.ctime}}</text>
+					</view>
 				</view>
-			</view>
+			</block>
+
+			<block wx:else>
+				<view class="comment-placeholder">来当第一个评论的人吧～</view>
+			</block>
+			
 
 		</view>
 	</view>
