@@ -60,3 +60,13 @@
 	color: #1e1e1e;
 	font-size: 25rpx;
 }
+
+.empty-container {
+	color: #cdcdcd;
+	box-sizing: border-box;
+	width: 100%;
+	display: flex;
+	padding-top: 400rpx;
+	justify-content: center;
+	align-items: center;
+}

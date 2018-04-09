@@ -7,13 +7,23 @@
 </view>
 
 
-<view class="book-container" catchtap="readBook" wx:else>
-	<view class="book bg-white" hover-class="book-hover" wx:for="{{bookList}}" wx:key="index">
-		<view class="book-image" data-test="{{item.imgUrl}}">
-			<image src="{{item.imgUrl}}" mode="scaleToFill"></image>
+<view class="book-container" wx:else>
+	<block wx:if="{{bookList.length > 0}}">
+		<block wx:for="{{bookList}}" wx:key="index">
+			<view class="book bg-white" hover-class="book-hover" data-id="{{item.bkid}}" data-file="{{item.bkfile}}" catchtap="readBook">
+				<view class="book-image">
+					<image src="{{item.bkcover}}" mode="scaleToFill"></image>
+				</view>
+				<view class="book-name">
+					<text>{{ item.bkname }}</text>
+				</view>
+			</view>
+		</block>
+	</block>
+
+	<block wx:else>
+		<view class="empty-container">
+			<view class="donut-container">空空如也</view>
 		</view>
-		<view class="book-name">
-			<text>{{ item.bookName }}</text>
-		</view>
-	</view>
+	</block>
 </view>

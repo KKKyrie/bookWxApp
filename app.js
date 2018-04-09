@@ -178,7 +178,6 @@ App({
 
 
     globalData: {
-        userInfo: null,
-        bookList: []
+        userInfo: null
     }
 });

@@ -1,5 +1,6 @@
 // pages/myBooks/myBooks.js
 const api = require('../../config/config.js');
+const app = getApp();
 
 Page({
 
@@ -7,46 +8,55 @@ Page({
      * 页面的初始数据
      */
     data: {
-        bookList: [{
-            index: 1,
-            bookName: '钢铁是怎样炼成的',
-            author: 'jeremy',
-            publisher: 'now',
-            class: 'tech',
-            bookId: '666',
-            imgUrl: 'http://kyrieliu.cn/markdown-pics/pa.jpg'
-        }, {
-            index: 2,
-            bookName: 'test',
-            author: 'jeremy',
-            publisher: 'now',
-            class: 'tech',
-            bookId: '666',
-            imgUrl: 'http://kyrieliu.cn/markdown-pics/pa.jpg'
-        }, {
-            index: 3,
-            bookName: 'test',
-            author: 'jeremy',
-            publisher: 'now',
-            class: 'tech',
-            bookId: '666',
-            imgUrl: 'http://kyrieliu.cn/markdown-pics/pa.jpg'
-        }, {
-            index: 4,
-            bookName: 'test',
-            author: 'jeremy',
-            publisher: 'now',
-            class: 'tech',
-            bookId: '666',
-            imgUrl: 'http://kyrieliu.cn/markdown-pics/pa.jpg'
-        }],
+        bookList: [],
 
-        showLoading: true
+        showLoading: true,
+
+        loginFlag: app.getLoginFlag()
     },
 
     readBook: function(ev){
-        let test = ev.target;
-        console.log(test);
+        let data = ev.currentTarget.dataset;
+        let fileUrl = data.file;
+        wx.downloadFile({
+            url: fileUrl,
+            success: function(res) {
+                var filePath = res.tempFilePath
+                wx.openDocument({
+                    filePath: filePath,
+                    success: function(res) {
+                        console.log('打开文档成功')
+                    }
+                });
+            },
+            fail: function(error) {
+                console.log(error);
+            }
+        });
+    },
+
+    getMybooks: function(){
+        let that = this;
+        wx.request({
+            url: api.getBoughtBooksUrl,
+            data: {
+                skey: that.data.loginFlag
+            },
+            success: function(res) {
+                let data = res.data;
+
+                if (data.result === 0) {
+                    console.log(data);
+                    that.setData({
+                        bookList: data.list || []
+                    });
+                }
+
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
     },
 
     /**
@@ -59,6 +69,8 @@ Page({
                 showLoading: false
             });
         }, 800);
+
+        that.getMybooks();
     },
 
     /**

@@ -52,8 +52,6 @@ Page({
                 // console.log(data);
 
                 if (data.result === 0) {
-                    app.globalData.bookList = data.data;
-
 
                     setTimeout(function() {
                         that.setData({
