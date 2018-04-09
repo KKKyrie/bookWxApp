@@ -70,13 +70,12 @@ Page({
 
             let requestData = {
                 skey: that.data.loginFlag,
-                comment: that.data.comment,
-                commentTime: Date.now(),
-                bookId: that.data.bookInfo.id
+                content: that.data.comment,
+                bookid: that.data.bookInfo.id
             };
 
             wx.request({
-                url: '',
+                url: 'https://jeremygao.net/api/comment/write',
                 method: 'POST',
                 data: requestData,
                 success: function(res) {
