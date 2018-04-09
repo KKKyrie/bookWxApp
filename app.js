@@ -1,4 +1,6 @@
 //app.js
+const api = require('./config/config.js');
+
 App({
 
     onLaunch: function() {
@@ -82,7 +84,7 @@ App({
                         success: function(infoRes) {
                             // 请求服务端的登录接口
                             wx.request({
-                                url: 'https://jeremygao.net/login',
+                                url: api.loginUrl,
 
                                 data: {
                                     code: loginRes.code,

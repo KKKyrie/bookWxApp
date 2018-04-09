@@ -1,6 +1,7 @@
 // pages/books/books.js
 
 const app = getApp();
+const api = require('../../config/config.js');
 
 
 Page({
@@ -42,7 +43,7 @@ Page({
     getBookList: function() {
         let that = this;
         wx.request({
-            url: 'https://jeremygao.net/api/book/getBooks',
+            url: api.getBooksUrl,
             data: {
                 is_all: 1
             },

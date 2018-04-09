@@ -1,4 +1,6 @@
 // pages/myBooks/myBooks.js
+const api = require('../../config/config.js');
+
 Page({
 
     /**

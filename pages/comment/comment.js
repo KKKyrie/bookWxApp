@@ -1,6 +1,7 @@
 // pages/comment/comment.js
 
 const app = getApp();
+const api = require('../../config/config.js');
 
 Page({
 
@@ -75,18 +76,25 @@ Page({
             };
 
             wx.request({
-                url: 'https://jeremygao.net/api/comment/write',
+                url: api.commentUrl,
                 method: 'POST',
                 data: requestData,
                 success: function(res) {
-                    that.showInfo('评论成功', 'success', function() {
-                        wx.setStorageSync('isFromBack', '1');
-                        setTimeout(function(){
-                            wx.navigateBack({
-                                delta: 1
-                            });
-                        }, 1500);
-                    });
+
+                    if (res.data.result == 0) {
+                        that.showInfo('评论成功', 'success', function() {
+                            wx.setStorageSync('isFromBack', '1');
+                            setTimeout(function() {
+                                wx.navigateBack({
+                                    delta: 1
+                                });
+                            }, 1500);
+                        });
+                    } else {
+                        console.log(res.data);
+                        that.showInfo(res.data.errmsg);
+                    }
+
                 },
                 fail: function(error) {
                     that.showInfo('请求失败');
@@ -97,7 +105,7 @@ Page({
 
 
     // 封装 wx.showToast
-    showInfo: function(info, icon = 'none', callback) {
+    showInfo: function(info, icon = 'none', callback = () => {}) {
         wx.showToast({
             title: info,
             icon: icon,
