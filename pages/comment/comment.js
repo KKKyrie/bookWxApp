@@ -81,6 +81,7 @@ Page({
                 data: requestData,
                 success: function(res) {
                     that.showInfo('评论成功', 'success', function() {
+                        wx.setStorageSync('isFromBack', '1');
                         setTimeout(function(){
                             wx.navigateBack({
                                 delta: 1

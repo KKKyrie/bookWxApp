@@ -138,10 +138,13 @@ Page({
         that.getPageData()
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
+    // 从上级页面返回时 重新拉去评论列表
+    backRefreshPage: function(){
+        
+        let that = this;
+        that.setData({ commentLoading: true });
+
+        that.getPageData();
 
     },
 
@@ -149,6 +152,10 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-
+        if (wx.getStorageSync('isFromBack')){
+            wx.removeStorageSync('isFromBack')
+            this.backRefreshPage();
+        }
+        
     }
 });
