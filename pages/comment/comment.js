@@ -13,7 +13,7 @@ Page({
         loginFlag: app.getLoginFlag()
     },
 
-    // 用户输入备注
+    // 用户输入评论
     inputComment: function(ev) {
         let that = this;
         that.setData({
@@ -79,10 +79,16 @@ Page({
                 url: '',
                 method: 'POST',
                 data: requestData,
-                success: function(res){
-                    console.log(res);
+                success: function(res) {
+                    that.showInfo('评论成功', 'success', function() {
+                        setTimeout(function(){
+                            wx.navigateBack({
+                                delta: 1
+                            });
+                        }, 1500);
+                    });
                 },
-                fail: function(error){
+                fail: function(error) {
                     that.showInfo('请求失败');
                 }
             });
@@ -91,12 +97,13 @@ Page({
 
 
     // 封装 wx.showToast
-    showInfo: function(info){
+    showInfo: function(info, icon = 'none', callback) {
         wx.showToast({
             title: info,
-            icon: 'none',
+            icon: icon,
             duration: 1500,
-            mask: true
+            mask: true,
+            success: callback
         });
     },
 

@@ -14,7 +14,8 @@
 		</view>
 
 		<view class="button-area">
-			<button type="primary" catchtap="exchangeBook">兑换</button>
+			<button type="default" catchtap="readBook" wx:if="{{bookIsBuy == 1}}">打开</button>
+			<button type="primary" catchtap="confirmExchangeBook" wx:if="{{bookIsBuy == 0}}">兑换</button>
 		</view>
 
 	</view>

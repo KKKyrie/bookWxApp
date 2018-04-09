@@ -10,6 +10,7 @@ Page({
     data: {
         commentList: [],
         bookInfo: {},
+        bookIsBuy: -1,
         commentLoading: true,
         loginFlag: app.getLoginFlag()
     },
@@ -32,7 +33,26 @@ Page({
         });
     },
 
-    exchangeBook: function() {
+    readBook: function() {
+        let fileUrl = this.data.bookInfo.file;
+        wx.downloadFile({
+            url: fileUrl,
+            success: function(res) {
+                var filePath = res.tempFilePath
+                wx.openDocument({
+                    filePath: filePath,
+                    success: function(res) {
+                        console.log('打开文档成功')
+                    }
+                });
+            },
+            fail: function(error) {
+                console.log(error);
+            }
+        });
+    },
+
+    confirmExchangeBook: function() {
         let that = this;
         wx.showModal({
             title: '提示',
@@ -58,8 +78,10 @@ Page({
         });
     },
 
+    exchangeBook: function() {},
+
     // 获取书籍评论列表及是否购买
-    getPageData: function(){
+    getPageData: function() {
 
         let that = this;
         let requestData = {
@@ -71,24 +93,25 @@ Page({
             url: 'https://jeremygao.net/api/book/queryBook',
             method: 'GET',
             data: requestData,
-            success: function(res){
-                if (res.data.result === 0){
+            success: function(res) {
+                if (res.data.result === 0) {
                     that.setData({
                         commentList: res.data.data.lists,
-                        commentLoading: false
+                        commentLoading: false,
+                        bookIsBuy: res.data.data.is_buy
                     });
                 } else {
                     that.showInfo('返回数据异常');
                 }
             },
-            fail: function(error){
+            fail: function(error) {
                 that.showInfo('请求失败');
             }
         });
     },
 
 
-    showInfo: function(info){
+    showInfo: function(info) {
         wx.showToast({
             title: info,
             icon: 'none',
