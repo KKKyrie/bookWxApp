@@ -57,7 +57,7 @@ Page({
         let that = this;
         wx.showModal({
             title: '提示',
-            content: '确定用1高磊币兑换此书吗？',
+            content: '确定用1积分兑换此书吗？',
             showCancel: true,
             cancelText: '打扰了',
             cancelColor: '#8a8a8a',
@@ -96,7 +96,7 @@ Page({
                     });
 
                     let balance = app.globalData.userInfo.balance;
-                    app.globalData.userInfo.price = balance - 1;
+                    app.globalData.userInfo.balance = balance - 1;
                     wx.setStorageSync('userInfo', JSON.stringify(app.globalData.userInfo));
 
                     that.showInfo('购买成功', 'success');
