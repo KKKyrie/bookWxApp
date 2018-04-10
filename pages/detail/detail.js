@@ -53,7 +53,7 @@ Page({
         });
     },
 
-    confirmExchangeBook: function() {
+    confirmBuyBook: function() {
         let that = this;
         wx.showModal({
             title: '提示',
@@ -66,11 +66,7 @@ Page({
             success: function(res) {
                 if (res.confirm) {
                     // 兑换
-                    wx.showToast({
-                        title: '兑换成功',
-                        icon: 'success',
-                        duration: 1500
-                    });
+                    that.buyBook();
 
                 } else if (res.cancel) {
                     // 取消
@@ -79,7 +75,44 @@ Page({
         });
     },
 
-    exchangeBook: function() {},
+    buyBook: function() {
+        let that = this;
+        let bookId = that.data.bookInfo.id;
+        let requestData = {
+            bookid: bookId,
+            skey: that.data.loginFlag
+        };
+
+        wx.request({
+            url: api.buyBookUrl,
+            method: 'POST',
+            data: requestData,
+            success: function(res) {
+                if (res.data.result === 0) {
+                    // 将按钮置为“打开”
+                    // 更新用户兑换币的值
+                    that.setData({
+                        bookIsBuy: 1
+                    });
+
+                    let balance = app.globalData.userInfo.price;
+                    app.globalData.userInfo.price = balance - 1;
+                    wx.setStorageSync('userInfo', JSON.stringify(app.globalData.userInfo));
+
+                    that.showInfo('购买成功', 'success');
+
+                } else {
+                    console.log(res);
+                    that.showInfo('返回数据异常');
+                }
+            },
+            fail: function(error) {
+                console.log(error);
+                that.showInfo('请求失败');
+            }
+        });
+
+    },
 
     // 获取书籍评论列表及是否购买
     getPageData: function() {
@@ -96,7 +129,6 @@ Page({
             data: requestData,
             success: function(res) {
                 if (res.data.result === 0) {
-                    console.log(res.data);
                     that.setData({
                         commentList: res.data.data.lists || [],
                         bookIsBuy: res.data.data.is_buy
@@ -118,10 +150,10 @@ Page({
     },
 
 
-    showInfo: function(info) {
+    showInfo: function(info, icon = 'none') {
         wx.showToast({
             title: info,
-            icon: 'none',
+            icon: icon,
             duration: 1500,
             mask: true
         });
@@ -142,7 +174,8 @@ Page({
             bookInfo: _bookInfo
         });
 
-        that.getPageData()
+        that.getPageData();
+
     },
 
     // 从上级页面返回时 重新拉去评论列表
