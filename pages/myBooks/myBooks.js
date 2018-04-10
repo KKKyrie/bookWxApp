@@ -17,6 +17,7 @@ Page({
     readBook: function(ev) {
         let data = ev.currentTarget.dataset;
         let fileUrl = data.file;
+        let that = this;
         wx.downloadFile({
             url: fileUrl,
             success: function(res) {

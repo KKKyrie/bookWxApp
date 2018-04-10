@@ -35,6 +35,7 @@ Page({
 
     readBook: function() {
         let fileUrl = this.data.bookInfo.file;
+        let that = this;
         wx.downloadFile({
             url: fileUrl,
             success: function(res) {
@@ -42,11 +43,16 @@ Page({
                 wx.openDocument({
                     filePath: filePath,
                     success: function(res) {
-                        console.log('打开文档成功')
+                        console.log('打开文档成功');
+                    },
+                    fail: function(error){
+                        console.log(error);
+                        that.showInfo('文档打开失败');
                     }
                 });
             },
             fail: function(error) {
+                that.showInfo('文档下载失败');
                 console.log(error);
             }
         });
