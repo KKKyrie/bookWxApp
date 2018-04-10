@@ -95,7 +95,7 @@ Page({
                         bookIsBuy: 1
                     });
 
-                    let balance = app.globalData.userInfo.price;
+                    let balance = app.globalData.userInfo.balance;
                     app.globalData.userInfo.price = balance - 1;
                     wx.setStorageSync('userInfo', JSON.stringify(app.globalData.userInfo));
 

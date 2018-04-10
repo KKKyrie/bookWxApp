@@ -66,7 +66,15 @@
 	box-sizing: border-box;
 	width: 100%;
 	display: flex;
-	padding-top: 400rpx;
+	padding-top: 300rpx;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
 }

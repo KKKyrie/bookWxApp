@@ -15,7 +15,7 @@ Page({
         loginFlag: app.getLoginFlag()
     },
 
-    readBook: function(ev){
+    readBook: function(ev) {
         let data = ev.currentTarget.dataset;
         let fileUrl = data.file;
         wx.downloadFile({
@@ -26,16 +26,21 @@ Page({
                     filePath: filePath,
                     success: function(res) {
                         console.log('打开文档成功')
+                    },
+                    fail: function(error){
+                        console.log(error);
+                        that.showInfo('文档打开失败');
                     }
                 });
             },
             fail: function(error) {
+                that.showInfo('文档下载失败');
                 console.log(error);
             }
         });
     },
 
-    getMybooks: function(){
+    getMybooks: function() {
         let that = this;
         wx.request({
             url: api.getBoughtBooksUrl,
@@ -59,12 +64,21 @@ Page({
         });
     },
 
+    showInfo: function(info) {
+        wx.showToast({
+            title: info,
+            icon: 'none',
+            mask: true,
+            duration: 1500
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
         let that = this;
-        setTimeout(function(){
+        setTimeout(function() {
             that.setData({
                 showLoading: false
             });

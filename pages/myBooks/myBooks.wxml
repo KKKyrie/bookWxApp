@@ -23,6 +23,7 @@
 
 	<block wx:else>
 		<view class="empty-container">
+			<image class="userinfo-avatar" src="../../images/sad.png" background-size="cover"></image>
 			<view class="donut-container">空空如也</view>
 		</view>
 	</block>
