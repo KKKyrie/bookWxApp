@@ -10,8 +10,7 @@ Page({
      */
     data: {
         bookInfo: {},
-        comment: '',
-        loginFlag: app.getLoginFlag()
+        comment: ''
     },
 
     // 用户输入评论
@@ -70,7 +69,7 @@ Page({
             console.log('submit!');
 
             let requestData = {
-                skey: that.data.loginFlag,
+                skey: app.getLoginFlag(),
                 content: that.data.comment,
                 bookid: that.data.bookInfo.id
             };

@@ -16,7 +16,6 @@ App({
 
         that.checkLoginStatus();
 
-
     },
 
 

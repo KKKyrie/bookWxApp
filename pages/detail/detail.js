@@ -12,8 +12,7 @@ Page({
         commentList: [],
         bookInfo: {},
         bookIsBuy: -1,
-        commentLoading: true,
-        loginFlag: app.getLoginFlag()
+        commentLoading: true
     },
 
 
@@ -80,7 +79,7 @@ Page({
         let bookId = that.data.bookInfo.id;
         let requestData = {
             bookid: bookId,
-            skey: that.data.loginFlag
+            skey: app.getLoginFlag()
         };
 
         wx.request({
@@ -120,7 +119,7 @@ Page({
         let that = this;
         let requestData = {
             bookid: that.data.bookInfo.id,
-            skey: that.data.loginFlag
+            skey: app.getLoginFlag()
         };
 
         wx.request({
@@ -175,6 +174,7 @@ Page({
         });
 
         that.getPageData();
+
 
     },
 

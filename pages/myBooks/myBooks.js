@@ -10,9 +10,8 @@ Page({
     data: {
         bookList: [],
 
-        showLoading: true,
+        showLoading: true
 
-        loginFlag: app.getLoginFlag()
     },
 
     readBook: function(ev) {
@@ -45,7 +44,7 @@ Page({
         wx.request({
             url: api.getBoughtBooksUrl,
             data: {
-                skey: that.data.loginFlag
+                skey: app.getLoginFlag()
             },
             success: function(res) {
                 let data = res.data;
