@@ -12,7 +12,9 @@ Page({
         commentList: [],
         bookInfo: {},
         bookIsBuy: -1,
-        commentLoading: true
+        commentLoading: true,
+        downloading: false,
+        downloadPercent: 0
     },
 
 
@@ -36,27 +38,46 @@ Page({
     readBook: function() {
         let fileUrl = this.data.bookInfo.file;
         let that = this;
-        wx.downloadFile({
+        let key = 'book_' + that.data.bookInfo.id;
+
+        let downloadPath = app.getDownloadPath(key);
+        if (downloadPath) {
+            app.openBook(downloadPath);
+            return;
+        }
+
+        const downloadTask = wx.downloadFile({
             url: fileUrl,
             success: function(res) {
-                var filePath = res.tempFilePath
-                wx.openDocument({
-                    filePath: filePath,
-                    success: function(res) {
-                        console.log('打开文档成功');
-                    },
-                    fail: function(error){
-                        console.log(error);
-                        that.showInfo('文档打开失败');
-                    }
+                let filePath = res.tempFilePath
+                that.setData({
+                    downloading: false
                 });
+
+                // 调用 wx.saveFile 将下载的文件保存在本地
+                app.saveDownloadPath(key, filePath)
+                    .then(function(saveFilePath) {
+                        app.openBook(saveFilePath);
+                    })
+                    .catch(function() {
+                        app.showInfo('文件保存失败');
+                    });
+
             },
             fail: function(error) {
                 that.showInfo('文档下载失败');
                 console.log(error);
             }
         });
+
+        downloadTask.onProgressUpdate(function(res) {
+            that.setData({
+                downloading: true,
+                downloadPercent: res.progress
+            });
+        });
     },
+
 
     confirmBuyBook: function() {
         let that = this;

@@ -9,36 +9,59 @@ Page({
      */
     data: {
         bookList: [],
-
-        showLoading: true
-
+        showLoading: true,
+        showDownloading: false,
+        downloadPercent: 0
     },
 
     readBook: function(ev) {
-        let data = ev.currentTarget.dataset;
-        let fileUrl = data.file;
         let that = this;
-        wx.downloadFile({
+        let data = ev.currentTarget.dataset;
+        let key = 'book_' + data.id;
+        let fileUrl = data.file;
+
+
+        // 如果已经下载过当前书 直接打开
+        let downloadPath = app.getDownloadPath(key);
+        if (downloadPath) {
+            app.openBook(downloadPath);
+            return;
+        }
+
+
+        const downloadTask = wx.downloadFile({
             url: fileUrl,
             success: function(res) {
-                var filePath = res.tempFilePath
-                wx.openDocument({
-                    filePath: filePath,
-                    success: function(res) {
-                        console.log('打开文档成功')
-                    },
-                    fail: function(error){
-                        console.log(error);
-                        that.showInfo('文档打开失败');
-                    }
+                let filePath = res.tempFilePath;
+                that.setData({
+                    showDownloading: false
                 });
+
+                app.saveDownloadPath(key, filePath)
+                    .then(function(saveFilePath) {
+                        app.openBook(saveFilePath);
+                    })
+                    .catch(function() {
+                        app.showInfo('文件保存失败');
+                    });
             },
             fail: function(error) {
-                that.showInfo('文档下载失败');
+                app.showInfo('文档下载失败');
                 console.log(error);
             }
         });
+
+        downloadTask.onProgressUpdate(function(res) {
+
+            let progress = res.progress;
+            that.setData({
+                showDownloading: true,
+                downloadPercent: progress
+            });
+
+        });
     },
+
 
     getMybooks: function() {
         let that = this;
@@ -51,7 +74,6 @@ Page({
                 let data = res.data;
 
                 if (data.result === 0) {
-                    console.log(data);
                     that.setData({
                         bookList: data.list || []
                     });
@@ -64,14 +86,6 @@ Page({
         });
     },
 
-    showInfo: function(info) {
-        wx.showToast({
-            title: info,
-            icon: 'none',
-            mask: true,
-            duration: 1500
-        });
-    },
 
     /**
      * 生命周期函数--监听页面加载

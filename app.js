@@ -166,12 +166,48 @@ App({
 
 
     // 封装 wx.showToast 方法
-    showInfo: function(info = 'error'){
+    showInfo: function(info = 'error', icon = 'none') {
         wx.showToast({
             title: info,
-            icon: 'none',
+            icon: icon,
             duration: 1500,
             mask: true
+        });
+    },
+
+    getDownloadPath: function(key) {
+        // 本地是否保存了书的已下载路径
+        return wx.getStorageSync(key);
+    },
+
+    // 调用 wx.saveFile 将下载的文件保存在本地
+    saveDownloadPath: function(key, filePath) {
+        return new Promise((resolve, reject) => {
+            wx.saveFile({
+                tempFilePath: filePath,
+                success: function(res) {
+                    // 保存成功 在Storage中标记 下次不再下载
+                    let savedFilePath = res.savedFilePath;
+                    wx.setStorageSync(key, savedFilePath);
+                    resolve(savedFilePath);
+                },
+                fail: function() {
+                    reject(false);
+                }
+            });
+        })
+
+    },
+
+    openBook: function(filePath) {
+        wx.openDocument({
+            filePath: filePath,
+            success: function(res) {
+                console.log('打开文档成功')
+            },
+            fail: function(error) {
+                console.log(error);
+            }
         });
     },
 

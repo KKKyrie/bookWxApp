@@ -28,3 +28,14 @@
 		</view>
 	</block>
 </view>
+
+
+<!-- 下载书籍时的loading浮层 -->
+<view class="full-loading" wx:if="{{showDownloading}}">
+
+	<text>书籍下载中...</text>
+	<view>
+		<progress percent="{{downloadPercent}}" stroke-width="6" activeColor="#1aad19" backgroundColor="#cdcdcd" show-info />
+	</view>
+	
+</view>
