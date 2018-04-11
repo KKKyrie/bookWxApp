@@ -63,15 +63,17 @@ Page({
         }
     },
 
-    submitComment: function() {
+    submitComment: function(ev) {
         let that = this;
+        let formId = ev.detail.formId;
         if (that.checkUserInput()) {
             console.log('submit!');
 
             let requestData = {
                 skey: app.getLoginFlag(),
                 content: that.data.comment,
-                bookid: that.data.bookInfo.id
+                bookid: that.data.bookInfo.id,
+                formid: formId
             };
 
             wx.request({

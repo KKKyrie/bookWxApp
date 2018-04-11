@@ -12,10 +12,10 @@
 	</view>
 
 	<!-- bottom button -->
-    <view class="fixed-bottom block-full-width flex-container bg-white">
-
-        <button class="full-button" type="primary" catchtap="submitComment"> 提交评论 </button>
-
-    </view>
+	<form report-submit bindsubmit="submitComment">
+	    <view class="fixed-bottom block-full-width flex-container bg-white">
+	        <button class="full-button" type="primary" form-type="submit"> 提交评论 </button>
+	    </view>
+    </form>
 
 </view>
