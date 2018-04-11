@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
 
 Page({
     data: {
@@ -76,5 +76,12 @@ Page({
 
     onLoad: function() {
         this.checkLoginStatus();
+    },
+
+    onShow: function() {
+        let that = this;
+        that.setData({
+            userInfo: app.globalData.userInfo
+        });
     }
 })
