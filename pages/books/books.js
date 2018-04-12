@@ -22,7 +22,9 @@ Page({
         showLoading: true
     },
 
-
+    /**
+     * 打开书籍详情页面
+     */
     goDetail: function(ev) {
 
         let info = ev.currentTarget.dataset;
@@ -40,6 +42,9 @@ Page({
         });
     },
 
+    /**
+     * 获取所有书籍列表
+     */
     getBookList: function() {
         let that = this;
         wx.request({
@@ -80,7 +85,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-
+        wx.hideShareMenu()
     },
 
     /**
@@ -88,5 +93,26 @@ Page({
      */
     onShow: function() {
 
+    },
+
+    /**
+     * 设置页面转发信息
+     */
+    onShareAppMessage: function(res) {
+        if (res.from === 'button') {
+            // 来自页面内转发按钮
+            console.log(res.target)
+        }
+        return {
+            title: '小书架首页',
+            path: '/pages/books/books',
+            imageUrl: '/images/bookstore.png',
+            success: function (res) {
+                // 转发成功
+            },
+            fail: function (res) {
+                // 转发失败
+            }
+        }
     }
 });
