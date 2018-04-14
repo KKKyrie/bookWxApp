@@ -16,9 +16,7 @@ Page({
         interval: 5000,
         duration: 1000,
         circular: true,
-
         sideMargin: '100rpx',
-
         showLoading: true
     },
 
@@ -57,7 +55,6 @@ Page({
                 // console.log(data);
 
                 if (data.result === 0) {
-
                     setTimeout(function() {
                         that.setData({
                             bookList: data.data,

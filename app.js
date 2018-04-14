@@ -3,113 +3,91 @@ const api = require('./config/config.js');
 
 App({
 
-    onLaunch: function() {
-
+    onLaunch: function () {
         let that = this;
-
-        // 展示本地存储能力 begin
-        let logs = wx.getStorageSync('logs') || [];
-        logs.unshift(Date.now());
-        wx.setStorageSync('logs', logs);
-        // 展示本地存储能力 end
-
-
+        // 检查登录状态
         that.checkLoginStatus();
-
     },
 
-
-
     // 检查本地 storage 中是否有登录态标识
-    checkLoginStatus: function() {
+    checkLoginStatus: function () {
         let that = this;
         let loginFlag = wx.getStorageSync('loginFlag');
         if (loginFlag) {
             // 检查 session_key 是否过期
             wx.checkSession({
-
                 // session_key 有效(为过期)
-                success: function() {
-
+                success: function () {
                     // 直接从Storage中获取用户信息
                     let userStorageInfo = wx.getStorageSync('userInfo');
                     if (userStorageInfo) {
                         that.globalData.userInfo = JSON.parse(userStorageInfo);
                     } else {
-
                         that.showInfo('缓存信息缺失');
                         console.error('登录成功后将用户信息存在Storage的userStorageInfo字段中，该字段丢失');
                     }
 
                 },
-
                 // session_key 过期
-                fail: function() {
+                fail: function () {
                     // session_key过期
                     that.doLogin();
                 }
             });
-
-
         } else {
             // 无登录态
             that.doLogin();
         }
     },
 
-
     // 登录动作
-    doLogin: function(callback = () => {}) {
+    doLogin: function (callback = () => {}) {
         let that = this;
         wx.login({
-            success: function(loginRes) {
-
+            success: function (loginRes) {
                 if (loginRes.code) {
-
                     /* 
                      * 获取用户信息 期望数据如下 
                      *
-                     * userInfo       [object]
-                     * rawData        [string]
-                     * signature      [string]
-                     * encryptedData  [string]
-                     * iv             [string]
+                     * userInfo       [Object]
+                     * rawData        [String]
+                     * signature      [String]
+                     * encryptedData  [String]
+                     * iv             [String]
                      *
                      **/
                     wx.getUserInfo({
 
                         withCredentials: true, // 非必填, 默认为true
 
-                        success: function(infoRes) {
+                        success: function (infoRes) {
                             // 请求服务端的登录接口
                             wx.request({
                                 url: api.loginUrl,
 
                                 data: {
-                                    code: loginRes.code,
-                                    rawData: infoRes.rawData,
-                                    signature: infoRes.signature,
-                                    encryptedData: infoRes.encryptedData,
-                                    iv: infoRes.iv
+                                    code: loginRes.code,                    // 临时登录凭证
+                                    rawData: infoRes.rawData,               // 用户非敏感信息
+                                    signature: infoRes.signature,           // 签名
+                                    encryptedData: infoRes.encryptedData,   // 用户敏感信息
+                                    iv: infoRes.iv                          // 解密算法的向量
                                 },
 
-                                success: function(res) {
+                                success: function (res) {
                                     console.log('login success');
                                     res = res.data;
 
                                     if (res.result == 0) {
-
                                         that.globalData.userInfo = res.userInfo;
                                         wx.setStorageSync('userInfo', JSON.stringify(res.userInfo));
                                         wx.setStorageSync('loginFlag', res.skey);
                                         callback();
-
                                     } else {
                                         that.showInfo(res.errmsg);
                                     }
                                 },
 
-                                fail: function(error) {
+                                fail: function (error) {
                                     // 调用服务端登录接口失败
                                     that.showInfo('调用接口失败');
                                     console.log(error);
@@ -117,7 +95,7 @@ App({
                             });
                         },
 
-                        fail: function(error) {
+                        fail: function (error) {
                             // 获取 userInfo 失败，去检查是否未开启权限
                             wx.hideLoading();
                             that.checkUserInfoPermission();
@@ -131,7 +109,7 @@ App({
                 }
             },
 
-            fail: function(error) {
+            fail: function (error) {
                 // 调用 wx.login 接口失败
                 that.showInfo('接口调用失败');
                 console.log(error);
@@ -139,20 +117,20 @@ App({
         });
     },
 
-
-    checkUserInfoPermission: function(callback = () => {}) {
+    // 检查用户信息授权设置
+    checkUserInfoPermission: function (callback = () => { }) {
         wx.getSetting({
-            success: function(res) {
+            success: function (res) {
                 if (!res.authSetting['scope.userInfo']) {
                     wx.openSetting({
-                        success: function(authSetting) {
+                        success: function (authSetting) {
                             console.log(authSetting)
                         }
                     });
                 }
             },
 
-            fail: function(error) {
+            fail: function (error) {
                 console.log(error);
             }
         });
@@ -160,13 +138,13 @@ App({
 
 
     // 获取用户登录标示 供全局调用
-    getLoginFlag: function() {
+    getLoginFlag: function () {
         return wx.getStorageSync('loginFlag');
     },
 
 
     // 封装 wx.showToast 方法
-    showInfo: function(info = 'error', icon = 'none') {
+    showInfo: function (info = 'error', icon = 'none') {
         wx.showToast({
             title: info,
             icon: icon,
@@ -175,23 +153,24 @@ App({
         });
     },
 
-    getDownloadPath: function(key) {
+    // 获取书籍已下载路径
+    getDownloadPath: function (key) {
         // 本地是否保存了书的已下载路径
         return wx.getStorageSync(key);
     },
 
     // 调用 wx.saveFile 将下载的文件保存在本地
-    saveDownloadPath: function(key, filePath) {
+    saveDownloadPath: function (key, filePath) {
         return new Promise((resolve, reject) => {
             wx.saveFile({
                 tempFilePath: filePath,
-                success: function(res) {
+                success: function (res) {
                     // 保存成功 在Storage中标记 下次不再下载
                     let savedFilePath = res.savedFilePath;
                     wx.setStorageSync(key, savedFilePath);
                     resolve(savedFilePath);
                 },
-                fail: function() {
+                fail: function () {
                     reject(false);
                 }
             });
@@ -199,13 +178,14 @@ App({
 
     },
 
-    openBook: function(filePath) {
+    // 打开书籍
+    openBook: function (filePath) {
         wx.openDocument({
             filePath: filePath,
-            success: function(res) {
+            success: function (res) {
                 console.log('打开文档成功')
             },
-            fail: function(error) {
+            fail: function (error) {
                 console.log(error);
             }
         });

@@ -9,17 +9,17 @@ Page({
      * 页面的初始数据
      */
     data: {
-        commentList: [],
-        bookInfo: {},
-        bookIsBuy: -1,
-        commentLoading: true,
-        downloading: false,
-        downloadPercent: 0
+        commentList: [],        // 评论列表
+        bookInfo: {},           // 书籍信息
+        bookIsBuy: -1,          // 是否已购买
+        commentLoading: true,   // 评论loading态
+        downloading: false,     // 是否正在下载
+        downloadPercent: 0      // 当前书籍下载百分比
     },
 
 
     goComment: function(ev) {
-
+        // 获取dataset
         let info = ev.currentTarget.dataset;
         let navigateUrl = '../comment/comment?';
 
@@ -36,10 +36,10 @@ Page({
     },
 
     readBook: function() {
-        let fileUrl = this.data.bookInfo.file;
         let that = this;
+        let fileUrl = that.data.bookInfo.file;
         let key = 'book_' + that.data.bookInfo.id;
-
+        // 书籍是否已下载过
         let downloadPath = app.getDownloadPath(key);
         if (downloadPath) {
             app.openBook(downloadPath);
@@ -100,7 +100,7 @@ Page({
             }
         });
     },
-
+    // 兑换书籍
     buyBook: function() {
         let that = this;
         let bookId = that.data.bookInfo.id;
@@ -225,6 +225,5 @@ Page({
             wx.removeStorageSync('isFromBack')
             this.backRefreshPage();
         }
-
     }
 });
